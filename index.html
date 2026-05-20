@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вайпкодер: Погоня за Хайпом — Ретро-раннер</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="arcade-cabinet">
+        <div class="arcade-screen">
+            <!-- Эффект ЭЛТ-монитора -->
+            <div class="crt-overlay"></div>
+            <div class="crt-bezel-shadow"></div>
+            
+            <!-- Игровой холст -->
+            <canvas id="gameCanvas" width="600" height="800"></canvas>
+
+            <!-- Интерфейс HUD (поверх холста) -->
+            <div id="hud" class="hidden">
+                <div class="hud-top">
+                    <div class="score-container">
+                        <div class="hud-label">СЧЕТ</div>
+                        <div id="scoreVal" class="hud-value">000000</div>
+                    </div>
+                    <div class="score-container">
+                        <div class="hud-label">РЕКОРД</div>
+                        <div id="highScoreVal" class="hud-value">000000</div>
+                    </div>
+                </div>
+                
+                <div class="hud-bottom">
+                    <div class="hype-container">
+                        <div class="hud-label">ХАЙП</div>
+                        <div class="hype-bar-wrapper">
+                            <div id="hypeBar" class="hype-bar-fill" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="speed-container">
+                        <div class="hud-label">СКОРОСТЬ</div>
+                        <div id="speedVal" class="hud-value">1.0x</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Стартовый экран -->
+            <div id="startScreen" class="screen-overlay">
+                <div class="brand-logo-container">
+                    <span class="brand-g">G</span>
+                    <span class="brand-o">O</span>
+                    <span class="brand-o2">O</span>
+                    <span class="brand-g2">G</span>
+                    <span class="brand-l">L</span>
+                    <span class="brand-e">E</span>
+                </div>
+                <div class="title-container">
+                    <h1 class="game-title glow-text">ВАЙПКОДЕР</h1>
+                    <h2 class="game-subtitle">ПОГОНЯ ЗА ХАЙПОМ</h2>
+                </div>
+                
+                <div class="instructions">
+                    <p class="blink">НАЖМИ СТАРТ ДЛЯ ИГРЫ</p>
+                    <div class="control-help">
+                        <div class="control-row">
+                            <span class="key">A</span> / <span class="key">&larr;</span>
+                            <span class="desc">Влево</span>
+                        </div>
+                        <div class="control-row">
+                            <span class="key">D</span> / <span class="key">&rarr;</span>
+                            <span class="desc">Вправо</span>
+                        </div>
+                        <div class="control-row">
+                            <span class="desc-full">Или кликай/тапай по дорожкам!</span>
+                        </div>
+                    </div>
+                    <div class="game-rules">
+                        <p>Лови обновления нейросетей (+ХАЙП)</p>
+                        <p class="warning-text">Избегай багов и счетов (-ХАЙП)</p>
+                    </div>
+                </div>
+
+                <button id="startButton" class="btn glow-btn">ВСТАВИТЬ МОНЕТКУ</button>
+            </div>
+
+            <!-- Экран Game Over -->
+            <div id="gameOverScreen" class="screen-overlay hidden">
+                <h1 class="game-title critical-text blink">КОНЕЦ ИГРЫ</h1>
+                
+                <div class="results-box">
+                    <div class="result-row">
+                        <span>ВАШ ХАЙП-СЧЕТ:</span>
+                        <span id="finalScore" class="gold-text">0</span>
+                    </div>
+                    <div id="newRecordLabel" class="new-record-banner hidden">НОВЫЙ РЕКОРД!</div>
+                    <div class="result-row">
+                        <span>РЕКОРД:</span>
+                        <span id="finalHighScore" class="gold-text">0</span>
+                    </div>
+                </div>
+
+                <div class="statistics-box">
+                    <p id="statsUpdates">Обновлений поймано: 0</p>
+                    <p id="statsCompany">Любимая компания: GPT</p>
+                </div>
+
+                <button id="restartButton" class="btn glow-btn">ИГРАТЬ СНОВА</button>
+            </div>
+            
+            <!-- Кнопка Звука -->
+            <button id="soundToggle" class="sound-toggle" aria-label="Включить/выключить звук">
+                <span id="soundIcon">🔊</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Подключаем скрипты -->
+    <script src="sprites.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+/* Сброс стилей и общие ретро-переменные */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+:root {
+    --bg-dark: #09090e;
+    --arcade-frame: #1b1c2b;
+    --neon-pink: #ff0055;
+    --neon-blue: #00f0ff;
+    --neon-green: #39ff14;
+    --neon-yellow: #fffb00;
+    
+    /* Цвета брендов */
+    --google-blue: #4285F4;
+    --gpt-green: #10a37f;
+    --anthropic-clay: #e0d4c3;
+    --anthropic-orange: #d97706;
+}
+
+body {
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(27, 28, 43, 0.5) 0%, rgba(9, 9, 14, 1) 100%),
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 100%, 100% 4px;
+    color: #ffffff;
+    font-family: 'Press Start 2P', monospace;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Корпус аркадного автомата */
+.arcade-cabinet {
+    width: 95vw;
+    max-width: 540px;
+    height: 95vh;
+    max-height: 720px;
+    background: var(--arcade-frame);
+    border: 8px solid #2d2f44;
+    border-radius: 20px;
+    box-shadow: 
+        0 0 0 4px #000000,
+        0 20px 40px rgba(0, 0, 0, 0.8),
+        inset 0 0 20px rgba(0, 0, 0, 0.9),
+        0 0 25px rgba(0, 240, 255, 0.2);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Аркадный экран */
+.arcade-screen {
+    width: 100%;
+    height: 100%;
+    background-color: #050508;
+    position: relative;
+    border: 6px solid #111116;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 1);
+}
+
+/* Игровой Canvas */
+#gameCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* Эффект ЭЛТ-монитора (CRT) */
+.crt-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.22) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
+    background-size: 100% 4px, 6px 100%;
+    z-index: 100;
+    pointer-events: none;
+    animation: crt-flicker 0.15s infinite;
+}
+
+.crt-bezel-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.85);
+    z-index: 99;
+    pointer-events: none;
+}
+
+@keyframes crt-flicker {
+    0% { opacity: 0.985; }
+    50% { opacity: 1; }
+    100% { opacity: 0.985; }
+}
+
+/* Экраны-оверлеи (Стартовый, Конец игры) */
+.screen-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(8, 8, 12, 0.92);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px 15px;
+    z-index: 50;
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Брендовый логотип (GOOGLE) сверху на старте */
+.brand-logo-container {
+    font-size: 14px;
+    letter-spacing: 4px;
+    margin-top: 10px;
+}
+.brand-g { color: var(--google-blue); }
+.brand-o { color: var(--neon-pink); }
+.brand-o2 { color: var(--neon-yellow); }
+.brand-g2 { color: var(--google-blue); }
+.brand-l { color: var(--neon-green); }
+.brand-e { color: var(--neon-pink); }
+
+/* Заголовки */
+.title-container {
+    margin: 10px 0;
+}
+
+.game-title {
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: -2px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.glow-text {
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px var(--neon-pink),
+        0 0 15px var(--neon-pink),
+        0 0 20px var(--neon-pink);
+    animation: neon-glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes neon-glow {
+    from {
+        text-shadow: 0 0 4px #fff, 0 0 8px var(--neon-pink), 0 0 12px var(--neon-pink);
+    }
+    to {
+        text-shadow: 0 0 6px #fff, 0 0 14px var(--neon-pink), 0 0 22px var(--neon-pink), 0 0 30px var(--neon-pink);
+    }
+}
+
+.game-subtitle {
+    font-size: 12px;
+    color: var(--neon-blue);
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+}
+
+/* Инструкции */
+.instructions {
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.blink {
+    animation: text-blink 1s step-end infinite;
+}
+
+@keyframes text-blink {
+    from, to { color: transparent }
+    50% { color: #fff }
+}
+
+.control-help {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px dashed #444;
+    padding: 12px 10px;
+    font-size: 8px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 4px;
+}
+
+.control-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.key {
+    background: #333;
+    border: 2px solid #555;
+    border-radius: 3px;
+    padding: 2px 5px;
+    box-shadow: 0 2px 0 #000;
+    color: #fff;
+}
+
+.desc {
+    color: #aaa;
+    margin-left: 5px;
+}
+
+.desc-full {
+    color: var(--neon-blue);
+}
+
+.game-rules {
+    font-size: 8px;
+    color: #bbb;
+    line-height: 1.5;
+}
+
+.warning-text {
+    color: #ff3366;
+    margin-top: 5px;
+}
+
+/* Кнопки */
+.btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    padding: 15px 25px;
+    background: #111;
+    color: #fff;
+    border: 3px solid #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #333;
+    transition: all 0.1s;
+    outline: none;
+}
+
+.btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #000;
+}
+
+.glow-btn {
+    border-color: var(--neon-blue);
+    color: #fff;
+    box-shadow: 0 4px 0 rgba(0, 240, 255, 0.4), 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+.glow-btn:hover {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 4px 0 #0099aa, 0 0 15px var(--neon-blue);
+    border-color: #fff;
+}
+
+/* Экран конца игры */
+.critical-text {
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink);
+}
+
+.results-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 3px double #555;
+    padding: 15px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 10px;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gold-text {
+    color: var(--neon-yellow);
+    text-shadow: 0 0 5px rgba(255, 251, 0, 0.5);
+}
+
+.new-record-banner {
+    color: var(--neon-green);
+    font-size: 9px;
+    text-align: center;
+    letter-spacing: 1px;
+    animation: text-blink 0.4s step-end infinite;
+}
+
+.statistics-box {
+    font-size: 8px;
+    color: #888;
+    line-height: 1.8;
+}
+
+/* HUD Интерфейс */
+#hud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    z-index: 40;
+    pointer-events: none; /* Пропускаем клики на холст */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hud-top, .hud-bottom {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.score-container {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #333;
+    padding: 8px 10px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 110px;
+}
+
+.hud-label {
+    font-size: 6px;
+    color: #888;
+    letter-spacing: 0.5px;
+}
+
+.hud-value {
+    font-size: 9px;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.hype-container {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #333;
+    padding: 8px 10px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+    margin-right: 15px;
+}
+
+.hype-bar-wrapper {
+    height: 8px;
+    background: #222;
+    border: 1px solid #444;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.hype-bar-fill {
+    height: 100%;
+    background-color: var(--neon-green);
+    box-shadow: 0 0 8px var(--neon-green);
+    transition: width 0.1s linear, background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Цветовые состояния шкалы хайпа */
+.hype-high {
+    background-color: var(--neon-green);
+    box-shadow: 0 0 8px var(--neon-green);
+}
+.hype-medium {
+    background-color: var(--neon-yellow);
+    box-shadow: 0 0 8px var(--neon-yellow);
+}
+.hype-low {
+    background-color: var(--neon-pink);
+    box-shadow: 0 0 8px var(--neon-pink);
+}
+
+.speed-container {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #333;
+    padding: 8px 10px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Переключатель звука */
+.sound-toggle {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    z-index: 110;
+    pointer-events: auto; /* Разрешаем клик */
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #444;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: border-color 0.2s, background-color 0.2s;
+    outline: none;
+}
+
+.sound-toggle:hover {
+    border-color: var(--neon-blue);
+    background-color: rgba(0, 240, 255, 0.1);
+}
+
+.sound-toggle:active {
+    transform: scale(0.9);
+}
