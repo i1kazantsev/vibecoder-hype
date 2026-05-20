@@ -180,8 +180,8 @@ const SPRITE_LOGO_GOOGLE = [
     "....kkkkkkkk...."
 ];
 
-// Логотип GPT (Пиксельная спираль)
-const SPRITE_LOGO_GPT = [
+// Логотип OpenAI (Пиксельная спираль)
+const SPRITE_LOGO_OPENAI = [
     "....kkkkkkkk....",
     "...kggggggggk...",
     "..kggkkkkkkggk..",
@@ -225,7 +225,7 @@ const ALL_SPRITES = {
     outage: SPRITE_OUTAGE,
     bill: SPRITE_BILL,
     logoGoogle: SPRITE_LOGO_GOOGLE,
-    logoGpt: SPRITE_LOGO_GPT,
+    logoOpenai: SPRITE_LOGO_OPENAI,
     logoAnthropic: SPRITE_LOGO_ANTHROPIC
 };
 

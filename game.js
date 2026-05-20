@@ -31,11 +31,11 @@ const BRAND_INFO = {
         logoSprite: 'logoGoogle',
         updates: ["Gemini 1.5", "Gemini 2.0", "Project Astra", "Gemma 2", "Imagen 3", "Gemini 3.0 Pro"]
     },
-    gpt: {
-        name: 'GPT (OpenAI)',
+    openai: {
+        name: 'OpenAI',
         color: '#10a37f',
         accentColor: '#1a7f64',
-        logoSprite: 'logoGpt',
+        logoSprite: 'logoOpenai',
         updates: ["GPT-4o", "o1-mini", "o1-pro", "o3-mini", "Sora", "GPT-5 Hype"]
     },
     anthropic: {
@@ -250,7 +250,7 @@ let shakeMagnitude = 0;
 
 let statsCollected = {
     google: 0,
-    gpt: 0,
+    openai: 0,
     anthropic: 0,
     totalUpdates: 0
 };
@@ -387,7 +387,7 @@ function startGame() {
     
     statsCollected = {
         google: 0,
-        gpt: 0,
+        openai: 0,
         anthropic: 0,
         totalUpdates: 0
     };
@@ -439,9 +439,9 @@ function triggerGameOver() {
     // Находим любимую компанию
     let favorite = 'Google';
     let maxCount = statsCollected.google;
-    if (statsCollected.gpt > maxCount) {
-        favorite = 'GPT (OpenAI)';
-        maxCount = statsCollected.gpt;
+    if (statsCollected.openai > maxCount) {
+        favorite = 'OpenAI';
+        maxCount = statsCollected.openai;
     }
     if (statsCollected.anthropic > maxCount) {
         favorite = 'Anthropic';
@@ -474,7 +474,7 @@ class Spawnable {
         
         if (this.isUpdate) {
             // Бренд соответствует дорожке
-            const brands = ['google', 'gpt', 'anthropic'];
+            const brands = ['google', 'openai', 'anthropic'];
             this.brand = brands[this.lane];
             const brandDetails = BRAND_INFO[this.brand];
             
@@ -826,8 +826,8 @@ function drawBackground() {
         const endX = startX + LANE_WIDTH;
         
         // Берем настройки бренда для дорожки
-        // 0 -> google, 1 -> gpt, 2 -> anthropic
-        const brands = ['google', 'gpt', 'anthropic'];
+        // 0 -> google, 1 -> openai, 2 -> anthropic
+        const brands = ['google', 'openai', 'anthropic'];
         const brandKey = brands[i];
         const brand = BRAND_INFO[brandKey];
         
