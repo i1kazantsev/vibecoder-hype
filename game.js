@@ -1,6 +1,6 @@
 /**
  * game.js
- * Основной игровой движок раннера «Вайпкодер: Погоня за Хайпом».
+ * Основной игровой движок раннера «Вайба кодер: Погоня за Хайпом».
  */
 
 // === Состояния игры ===
@@ -256,8 +256,8 @@ let statsCollected = {
 };
 
 // Загрузка рекорда из LocalStorage
-if (localStorage.getItem('vypecoder_highScore')) {
-    highScore = parseInt(localStorage.getItem('vypecoder_highScore'), 10);
+if (localStorage.getItem('vibecoder_highScore')) {
+    highScore = parseInt(localStorage.getItem('vibecoder_highScore'), 10);
     document.getElementById('highScoreVal').innerText = String(highScore).padStart(6, '0');
 }
 
@@ -419,7 +419,7 @@ function triggerGameOver() {
     let isNewRecord = false;
     if (score > highScore) {
         highScore = score;
-        localStorage.setItem('vypecoder_highScore', highScore);
+        localStorage.setItem('vibecoder_highScore', highScore);
         highScoreVal.innerText = String(highScore).padStart(6, '0');
         isNewRecord = true;
     }
@@ -684,10 +684,10 @@ function updateGameLogic(dt) {
         return;
     }
     
-    // 2. Движение Вайпкодера к своей дорожке
+    // 2. Движение Вайба кодера к своей дорожке
     player.x += (player.targetX - player.x) * 0.2 * dt;
     
-    // Анимация Вайпкодера (бег)
+    // Анимация Вайба кодера (бег)
     player.animTimer += dt;
     if (player.animTimer > 8) {
         player.animFrame = (player.animFrame + 1) % 2;
@@ -882,21 +882,21 @@ function drawBackground() {
     }
 }
 
-// === Отрисовка Вайпкодера ===
+// === Отрисовка Вайба кодера ===
 function drawPlayer() {
-    let spriteName = 'vypecoderRun1';
+    let spriteName = 'vibecoderRun1';
     
     if (player.hurtTimer > 0) {
-        spriteName = 'vypecoderHurt';
+        spriteName = 'vibecoderHurt';
         // Эффект мерцания при получении урона
         if (Math.floor(player.flickerTimer / 4) % 2 === 0) {
             return; // Пропускаем отрисовку этого кадра
         }
     } else {
-        spriteName = player.animFrame === 0 ? 'vypecoderRun1' : 'vypecoderRun2';
+        spriteName = player.animFrame === 0 ? 'vibecoderRun1' : 'vibecoderRun2';
     }
     
-    // Спрайт Вайпкодера имеет разрешение 16x16
+    // Спрайт Вайба кодера имеет разрешение 16x16
     // Отрисуем его размером 4x пикселя на холсте => итоговый размер 64x64px
     const pixelScale = 4;
     const spriteSize = 16 * pixelScale; // 64

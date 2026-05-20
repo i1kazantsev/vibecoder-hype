@@ -14,13 +14,13 @@ const COLOR_MAP = {
     'd': '#4b5563', // Серый темный
     'l': '#9ca3af', // Серый светлый
     's': '#f97316', // Оранжевый (Anthropic)
-    'f': '#ffdbb5', // Телесный цвет кожи Вайпкодера
-    'h': '#6b21a8', // Фиолетовый (худи Вайпкодера)
+    'f': '#ffdbb5', // Телесный цвет кожи Вайба кодера
+    'h': '#6b21a8', // Фиолетовый (худи Вайба кодера)
     'j': '#9333ea', // Светло-фиолетовый (худи блик)
     'r': '#ef4444', // Красный
 };
 
-// 1. Вайпкодер (В худи, очках-визоре и с наушниками) - Бег Кадр 1
+// 1. Вайба кодер (В худи, очках-визоре и с наушниками) - Бег Кадр 1
 const SPRITE_VYPECODER_RUN1 = [
     "....kkkkkkkk....",
     "...kjjjjhhhhkk..",
@@ -40,7 +40,7 @@ const SPRITE_VYPECODER_RUN1 = [
     "..kk..k..kk..k.."
 ];
 
-// Вайпкодер - Бег Кадр 2 (ноги и руки в другой фазе)
+// Вайба кодер - Бег Кадр 2 (ноги и руки в другой фазе)
 const SPRITE_VYPECODER_RUN2 = [
     "....kkkkkkkk....",
     "...kjjjjhhhhkk..",
@@ -60,7 +60,7 @@ const SPRITE_VYPECODER_RUN2 = [
     "....kk.k.kk..k.."
 ];
 
-// Вайпкодер - Кадр Столкновения (боль, шок, очки косятся)
+// Вайба кодер - Кадр Столкновения (боль, шок, очки косятся)
 const SPRITE_VYPECODER_HURT = [
     "....kkkkkkkk....",
     "...krrrrrrrrkk..",
@@ -217,9 +217,9 @@ const SPRITE_LOGO_ANTHROPIC = [
 ];
 
 const ALL_SPRITES = {
-    vypecoderRun1: SPRITE_VYPECODER_RUN1,
-    vypecoderRun2: SPRITE_VYPECODER_RUN2,
-    vypecoderHurt: SPRITE_VYPECODER_HURT,
+    vibecoderRun1: SPRITE_VYPECODER_RUN1,
+    vibecoderRun2: SPRITE_VYPECODER_RUN2,
+    vibecoderHurt: SPRITE_VYPECODER_HURT,
     bug: SPRITE_BUG,
     rateLimit: SPRITE_RATE_LIMIT,
     outage: SPRITE_OUTAGE,
