@@ -513,15 +513,15 @@ class Spawnable {
             const radius = 16;
             drawUpdateBubble(ctx, this.x, this.y, radius, this.color, this.label);
             // Поверх рисуем логотип бренда (загруженное изображение PNG)
-507:             const img = LOGO_IMAGES[this.brand];
-508:             if (img && img.complete && img.naturalWidth !== 0) {
-509:                 // Логотип должен помещаться внутри капсулы обновления
-510:                 // Размер капсулы (radius=16) -> 32x32. Рисуем логотип 24x24
-511:                 ctx.drawImage(img, this.x - 12, this.y - 12, 24, 24);
-512:             } else {
-513:                 // Фолбэк на оригинальный спрайт
-514:                 drawPixelSprite(ctx, this.sprite, this.x - 12, this.y - 12, 1.5);
-515:             }
+            const img = LOGO_IMAGES[this.brand];
+            if (img && img.complete && img.naturalWidth !== 0) {
+                // Логотип должен помещаться внутри капсулы обновления
+                // Размер капсулы (radius=16) -> 32x32. Рисуем логотип 24x24
+                ctx.drawImage(img, this.x - 12, this.y - 12, 24, 24);
+            } else {
+                // Фолбэк на оригинальный спрайт
+                drawPixelSprite(ctx, this.sprite, this.x - 12, this.y - 12, 1.5);
+            }
         } else {
             // Отрисовка препятствия (размер спрайта 16x16. При pixelSize=3 размер будет 48x48)
             drawPixelSprite(ctx, this.sprite, this.x - 24, this.y - 24, 3);
@@ -852,19 +852,19 @@ function drawBackground() {
         ctx.fillRect(startX, 0, LANE_WIDTH, CANVAS_HEIGHT);
         
         // Отрисовка логотипа бренда на заднем плане (вверху дорожки)
-839:         ctx.save();
-840:         ctx.globalAlpha = 0.15; // Полупрозрачные бренды на бэкграунде
-841:         const logoSize = 120; // Увеличим размер для фонового логотипа
-842:         const logoX = LANE_CENTERS[i] - logoSize / 2;
-843:         const logoY = 100;
-844:         
-845:         const img = LOGO_IMAGES[brandKey];
-846:         if (img && img.complete && img.naturalWidth !== 0) {
-847:             ctx.drawImage(img, logoX, logoY, logoSize, logoSize);
-848:         } else {
-849:             // Фолбэк на оригинальный спрайт
-850:             drawPixelSprite(ctx, brand.logoSprite, logoX + (logoSize - 96)/2, logoY + (logoSize - 96)/2, 6);
-851:         }
+        ctx.save();
+        ctx.globalAlpha = 0.15; // Полупрозрачные бренды на бэкграунде
+        const logoSize = 120; // Увеличим размер для фонового логотипа
+        const logoX = LANE_CENTERS[i] - logoSize / 2;
+        const logoY = 100;
+        
+        const img = LOGO_IMAGES[brandKey];
+        if (img && img.complete && img.naturalWidth !== 0) {
+            ctx.drawImage(img, logoX, logoY, logoSize, logoSize);
+        } else {
+            // Фолбэк на оригинальный спрайт
+            drawPixelSprite(ctx, brand.logoSprite, logoX + (logoSize - 96)/2, logoY + (logoSize - 96)/2, 6);
+        }
         
         // Название бренда
         ctx.fillStyle = '#ffffff';
