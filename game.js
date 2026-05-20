@@ -1,6 +1,6 @@
 /**
  * game.js
- * Основной игровой движок раннера «Вайба кодер: Погоня за Хайпом».
+ * Основной игровой движок раннера «Вайбкодер: Погоня за Хайпом».
  */
 
 // === Состояния игры ===
@@ -46,6 +46,15 @@ const BRAND_INFO = {
         updates: ["Claude 3.5 Sonnet", "Claude 3.5 Haiku", "Claude 3.5 Opus", "Claude 3.7 Sonnet", "Computer Use", "Claude 4 Claude"]
     }
 };
+
+const LOGO_IMAGES = {
+    google: new Image(),
+    openai: new Image(),
+    anthropic: new Image()
+};
+LOGO_IMAGES.google.src = 'google_logo.png';
+LOGO_IMAGES.openai.src = 'openai_logo.png';
+LOGO_IMAGES.anthropic.src = 'anthropic_logo.png';
 
 const OBSTACLES = [
     { type: 'bug', sprite: 'bug', label: 'БАГ В КОДЕ!' },
@@ -503,9 +512,16 @@ class Spawnable {
             // Отрисовка светящейся капсулы обновления
             const radius = 16;
             drawUpdateBubble(ctx, this.x, this.y, radius, this.color, this.label);
-            // Поверх рисуем логотип бренда (пиксель-арт 16x16, сжатый в капсуле)
-            // Размер спрайта 16x16. При pixelSize=1.5 размер будет 24x24
-            drawPixelSprite(ctx, this.sprite, this.x - 12, this.y - 12, 1.5);
+            // Поверх рисуем логотип бренда (загруженное изображение PNG)
+507:             const img = LOGO_IMAGES[this.brand];
+508:             if (img && img.complete && img.naturalWidth !== 0) {
+509:                 // Логотип должен помещаться внутри капсулы обновления
+510:                 // Размер капсулы (radius=16) -> 32x32. Рисуем логотип 24x24
+511:                 ctx.drawImage(img, this.x - 12, this.y - 12, 24, 24);
+512:             } else {
+513:                 // Фолбэк на оригинальный спрайт
+514:                 drawPixelSprite(ctx, this.sprite, this.x - 12, this.y - 12, 1.5);
+515:             }
         } else {
             // Отрисовка препятствия (размер спрайта 16x16. При pixelSize=3 размер будет 48x48)
             drawPixelSprite(ctx, this.sprite, this.x - 24, this.y - 24, 3);
@@ -684,10 +700,10 @@ function updateGameLogic(dt) {
         return;
     }
     
-    // 2. Движение Вайба кодера к своей дорожке
+    // 2. Движение Вайбкодера к своей дорожке
     player.x += (player.targetX - player.x) * 0.2 * dt;
     
-    // Анимация Вайба кодера (бег)
+    // Анимация Вайбкодера (бег)
     player.animTimer += dt;
     if (player.animTimer > 8) {
         player.animFrame = (player.animFrame + 1) % 2;
@@ -836,13 +852,19 @@ function drawBackground() {
         ctx.fillRect(startX, 0, LANE_WIDTH, CANVAS_HEIGHT);
         
         // Отрисовка логотипа бренда на заднем плане (вверху дорожки)
-        ctx.save();
-        ctx.globalAlpha = 0.15; // Полупрозрачные бренды на бэкграунде
-        // Вычисляем размер спрайта 16x16. При pixelSize=6 размер логотипа 96x96
-        const logoSize = 16 * 6;
-        const logoX = LANE_CENTERS[i] - logoSize / 2;
-        const logoY = 120;
-        drawPixelSprite(ctx, brand.logoSprite, logoX, logoY, 6);
+839:         ctx.save();
+840:         ctx.globalAlpha = 0.15; // Полупрозрачные бренды на бэкграунде
+841:         const logoSize = 120; // Увеличим размер для фонового логотипа
+842:         const logoX = LANE_CENTERS[i] - logoSize / 2;
+843:         const logoY = 100;
+844:         
+845:         const img = LOGO_IMAGES[brandKey];
+846:         if (img && img.complete && img.naturalWidth !== 0) {
+847:             ctx.drawImage(img, logoX, logoY, logoSize, logoSize);
+848:         } else {
+849:             // Фолбэк на оригинальный спрайт
+850:             drawPixelSprite(ctx, brand.logoSprite, logoX + (logoSize - 96)/2, logoY + (logoSize - 96)/2, 6);
+851:         }
         
         // Название бренда
         ctx.fillStyle = '#ffffff';
@@ -882,7 +904,7 @@ function drawBackground() {
     }
 }
 
-// === Отрисовка Вайба кодера ===
+// === Отрисовка Вайбкодера ===
 function drawPlayer() {
     let spriteName = 'vibecoderRun1';
     
@@ -896,7 +918,7 @@ function drawPlayer() {
         spriteName = player.animFrame === 0 ? 'vibecoderRun1' : 'vibecoderRun2';
     }
     
-    // Спрайт Вайба кодера имеет разрешение 16x16
+    // Спрайт Вайбкодера имеет разрешение 16x16
     // Отрисуем его размером 4x пикселя на холсте => итоговый размер 64x64px
     const pixelScale = 4;
     const spriteSize = 16 * pixelScale; // 64
